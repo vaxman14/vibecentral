@@ -68,5 +68,6 @@ export function applyBranding(b: { appName: string; host: string; ownerName?: st
   document.title = b.appName;
   const set = (sel: string, text: string) => { const el = document.querySelector(sel); if (el) el.textContent = text; };
   set('#brandName', b.appName); set('#brandHost', b.host);
+  const img = document.querySelector<HTMLImageElement>('#brandImg'); if (img) img.src = '/brand/vibecentral-mark.svg'; // loaded: static mark
   set('#credit', b.appName); set('#footName', `${b.appName} · read-only view of your accounts`);
 }

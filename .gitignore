@@ -12,3 +12,5 @@ supabase/.branches/
 .DS_Store
 agent-state/
 web/public/agent/
+web/public/brand/
+web/public/favicon.ico

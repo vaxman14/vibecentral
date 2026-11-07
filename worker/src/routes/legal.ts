@@ -19,7 +19,7 @@ legalRoutes.get('/privacy', async (c) => {
   const who = b.ownerName || 'the owner';
   const poss = b.ownerName ? `${esc(b.ownerName)}'s` : "the owner's";
   const html = page(`Privacy policy · ${b.appName}`, `Privacy policy for ${b.appName}, a private single-user dashboard at ${b.host}.`, `
-  <a class="brand" href="/"><span class="mk"><img src="/logo.svg" alt=""></span><span>${esc(b.appName)}<small>${esc(b.host)}</small></span></a>
+  <a class="brand" href="/"><span class="mk"><img src="/brand/vibecentral-mark.svg" alt=""></span><span>${esc(b.appName)}<small>${esc(b.host)}</small></span></a>
   <h1>Privacy policy</h1>
   <p class="meta">Effective ${EFFECTIVE}</p>
   <h2>What ${esc(b.appName)} is</h2>
@@ -56,7 +56,7 @@ legalRoutes.get('/terms', async (c) => {
   const who = b.ownerName || 'the owner';
   const poss = b.ownerName ? `${esc(b.ownerName)}'s` : "the owner's";
   const html = page(`Terms of use · ${b.appName}`, `Terms of use for ${b.appName}, a private single-user dashboard at ${b.host}.`, `
-  <a class="brand" href="/"><span class="mk"><img src="/logo.svg" alt=""></span><span>${esc(b.appName)}<small>${esc(b.host)}</small></span></a>
+  <a class="brand" href="/"><span class="mk"><img src="/brand/vibecentral-mark.svg" alt=""></span><span>${esc(b.appName)}<small>${esc(b.host)}</small></span></a>
   <h1>Terms of use</h1>
   <p class="meta">Effective ${EFFECTIVE}</p>
   <h2>Private, single-user software</h2>

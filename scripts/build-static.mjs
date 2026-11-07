@@ -17,4 +17,15 @@ for (const dir of [join(root, 'web', 'public', 'agent'), join(root, 'dist', 'web
   if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
   for (const [src, dst] of Object.entries(files)) copyFileSync(join(root, 'scripts', src), join(dir, dst));
 }
-console.log('agent scripts copied to web/public/agent and dist/web/agent');
+// brand assets served by the app at /brand/* (favicon, touch icon, manifest icons, loading mark)
+const brandSrc = join(root, 'assets', 'brand');
+const brandFiles = ['favicon.ico', 'vibecentral-mark.svg', 'vibecentral-mark-animated.svg', 'png/vibecentral-mark-180.png', 'png/vibecentral-mark-192.png', 'png/vibecentral-mark-512.png'];
+for (const dir of [join(root, 'web', 'public'), join(root, 'dist', 'web')]) {
+  for (const f of brandFiles) {
+    const dst = join(dir, 'brand', f);
+    mkdirSync(join(dst, '..'), { recursive: true });
+    copyFileSync(join(brandSrc, f), dst);
+  }
+  copyFileSync(join(brandSrc, 'favicon.ico'), join(dir, 'favicon.ico'));
+}
+console.log('agent scripts copied to web/public/agent and dist/web/agent; brand assets to /brand');

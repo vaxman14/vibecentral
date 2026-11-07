@@ -1,3 +1,10 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: light)" srcset="assets/brand/vibecentral-logo-light.svg">
+    <img src="assets/brand/vibecentral-logo-dark.svg" width="420" alt="Vibe Central">
+  </picture>
+</p>
+
 # Vibe Central
 
 One read-only dashboard for everything you run: domains, sites, databases, revenue, app stores, mail, calendar, GitHub, Claude API spend, and what Claude Code did today. Self-hosted on your own free tiers. One user, by design.
