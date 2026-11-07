@@ -1,0 +1,9 @@
+{
+  "imports": {
+    "@supabase/supabase-js": "npm:@supabase/supabase-js@2"
+  },
+  "lock": false,
+  "compilerOptions": {
+    "strict": true
+  }
+}

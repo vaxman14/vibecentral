@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F3F0FA"/>
+      <stop offset="1" stop-color="#DCD2FF"/>
+    </linearGradient>
+    <linearGradient id="s" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#B9A5FF"/>
+      <stop offset="1" stop-color="#A78BFA"/>
+    </linearGradient>
+  </defs>
+  <!-- a small friendly ghost in the dashboard palette; replace this file with your own mascot -->
+  <path d="M60 14c-21 0-36 16-36 38v44c0 3 3 5 6 3l9-7 9 7c2 2 5 2 7 0l5-4 5 4c2 2 5 2 7 0l9-7 9 7c3 2 6 0 6-3V52c0-22-15-38-36-38z" fill="url(#g)"/>
+  <path d="M60 22c-16 0-28 12-28 30v38l7-5c2-2 5-2 7 0l9 7 5-4c0 0 0 0 0 0l5 4 9-7c2-2 5-2 7 0l7 5V52c0-18-12-30-28-30z" fill="none" stroke="url(#s)" stroke-opacity=".35" stroke-width="2"/>
+  <ellipse cx="47" cy="52" rx="5.5" ry="7" fill="#131119"/>
+  <ellipse cx="73" cy="52" rx="5.5" ry="7" fill="#131119"/>
+  <circle cx="49" cy="49" r="2" fill="#fff"/>
+  <circle cx="75" cy="49" r="2" fill="#fff"/>
+  <path d="M51 68c4 5 14 5 18 0" fill="none" stroke="#131119" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="36" cy="63" r="5" fill="#F3A6D2" opacity=".6"/>
+  <circle cx="84" cy="63" r="5" fill="#F3A6D2" opacity=".6"/>
+  <circle cx="92" cy="28" r="4" fill="url(#s)"/>
+  <circle cx="24" cy="36" r="2.5" fill="url(#s)"/>
+</svg>

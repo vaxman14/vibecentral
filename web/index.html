@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HQ</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;650;700&display=swap">
+<link rel="stylesheet" href="/src/styles.css">
+</head>
+<body>
+<aside>
+  <div class="brand"><div class="mk" id="brandMk">H</div><div><span id="brandName">HQ</span><small id="brandHost"></small></div></div>
+  <div class="sec">WORKSPACE</div>
+  <nav id="nav"></nav>
+  <div class="asidefoot">
+    <div class="chip"><span class="dot" id="chipDot"></span><div><span id="chipMain">All sources synced</span><small id="chipSub">—</small></div></div>
+    <div class="acct"><div class="av" id="av">H</div><div><b id="acctName"></b><a href="#prefs">Settings</a></div><button class="out" type="button" id="signOut">Sign out</button></div>
+    <div class="credit" id="credit">HQ</div>
+  </div>
+</aside>
+<main>
+  <div class="top">
+    <button class="search" id="openPal" type="button"><span>⌕</span><span>Search projects, domains, tasks, mail…</span><kbd>⌘K</kbd></button>
+    <button class="skin" id="skin" type="button"></button>
+    <button class="dev" id="devBtn" type="button" aria-haspopup="true"><span class="dot"></span><span class="lbl" id="devLbl">All accounts</span> ▾</button>
+  </div>
+  <div class="hdr"><h1 id="title">Overview</h1><div style="display:flex;gap:8px;align-items:center"><span class="fresh" id="fresh">● Synced</span></div></div>
+  <div id="view"></div>
+  <div class="foot"><span id="footName">HQ · read-only view of your accounts</span><span>Nothing here can change a provider</span></div>
+</main>
+<div id="layer"></div>
+<script type="module" src="/src/main.ts"></script>
+</body>
+</html>

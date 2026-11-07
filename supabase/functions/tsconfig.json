@@ -1,0 +1,22 @@
+{
+  // Node-side type-check of the Edge Function when Deno is not installed:
+  //   npx tsc --noEmit -p supabase/functions/tsconfig.json
+  // `npm:` specifiers and the Deno global are declared in deno-shims.d.ts.
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": [],
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "allowImportingTsExtensions": true,
+    "isolatedModules": true,
+    "resolveJsonModule": true,
+    "noUnusedLocals": true,
+    "noFallthroughCasesInSwitch": true,
+    "useUnknownInCatchVariables": true
+  },
+  "include": ["deno-shims.d.ts", "sync/**/*.ts", "_shared/**/*.ts"]
+}

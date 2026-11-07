@@ -1,0 +1,20 @@
+/* Static legal pages: same bananana V18 tokens as the app, light/dark by system preference. */
+:root{color-scheme:dark;--canvas:#0E0C14;--surface:#191622;--border:#2B2738;--text:#F3F0FA;--muted:#ABA6BE;--faint:#7E7994;--teal:#B9A5FF;--glow:#2A2050;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);--r:22px;--font:Inter,system-ui,'Segoe UI',Arial,sans-serif;--mono:ui-monospace,Consolas,monospace}
+@media (prefers-color-scheme:light){:root{color-scheme:light;--canvas:#EFEEF6;--surface:#FFFFFF;--border:#E7E4F0;--text:#17151F;--muted:#5F5A70;--faint:#8F8AA3;--teal:#6D3FE0;--glow:#E3DCFB;
+  --shadow:0 1px 2px rgba(31,22,64,.04),0 10px 30px rgba(31,22,64,.06)}}
+*{box-sizing:border-box}
+body{margin:0;font:16px/24px var(--font);color:var(--text);background:radial-gradient(1200px 600px at 100% -10%,var(--glow) 0,transparent 60%),var(--canvas);background-attachment:fixed}
+a{color:var(--teal);text-decoration:none}a:hover{text-decoration:underline}
+.legal{max-width:760px;margin:0 auto;padding:40px max(16px,env(safe-area-inset-right,0px)) 32px max(16px,env(safe-area-inset-left,0px))}
+.brand{display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:18px;letter-spacing:-.01em;color:var(--text);margin-bottom:28px}
+.brand .mk{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,#DCD2FF,#B9A5FF);color:#131119;display:grid;place-items:center;font-size:15px;font-weight:800}
+.brand small{display:block;font-size:11px;font-weight:500;color:var(--faint);line-height:14px}
+h1{font-size:34px;line-height:40px;font-weight:650;letter-spacing:-.02em;margin:0 0 6px}
+h2{font-size:20px;line-height:28px;font-weight:600;letter-spacing:-.01em;margin:28px 0 8px}
+p,li{font-size:15px;line-height:23px;color:var(--text)}
+p{margin:0 0 12px}ul{margin:0 0 12px;padding-left:22px}li{margin:4px 0}
+.meta{font-size:13px;color:var(--faint);margin-bottom:8px}
+code{font-family:var(--mono);font-size:13px;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:1px 6px}
+footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--border);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:12px;letter-spacing:.5px;color:var(--faint)}
+footer a{color:var(--muted)}
