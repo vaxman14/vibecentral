@@ -1,4 +1,4 @@
-# HQ
+# Vibe Central
 
 One read-only dashboard for everything you run: domains, sites, databases, revenue, app stores, mail, calendar, GitHub, Claude API spend, and what Claude Code did today. Self-hosted on your own free tiers. One user, by design.
 
@@ -33,7 +33,7 @@ Phone layout:
 
 - **Single user.** Google sign-in only. The first Google account to sign in becomes the owner, or you pre-set an allow-list. No passwords, no sign-up page, no roles.
 - **Self-hosted.** Runs on a Cloudflare Worker, a Supabase project and (optionally) Resend, all on their free plans and all in your own accounts. Nothing is hosted by the author. No telemetry.
-- **Read-only.** Every connector calls GET endpoints. The handful of exceptions (OAuth token exchanges, one read-only GraphQL analytics query, three fixed SELECT statements) are listed in [docs/PROVIDERS.md](docs/PROVIDERS.md). HQ cannot deploy, delete, charge or change anything on a provider.
+- **Read-only.** Every connector calls GET endpoints. The handful of exceptions (OAuth token exchanges, one read-only GraphQL analytics query, three fixed SELECT statements) are listed in [docs/PROVIDERS.md](docs/PROVIDERS.md). Vibe Central cannot deploy, delete, charge or change anything on a provider.
 - **A snapshot.** Each account is synced every 5 minutes by default. The providers remain the source of truth.
 
 ## What it is not
@@ -44,7 +44,7 @@ Phone layout:
 
 ## Claude Code
 
-This is the part you will not find elsewhere. HQ shows what Claude Code did on each of your machines, per project.
+This is the part you will not find elsewhere. Vibe Central shows what Claude Code did on each of your machines, per project.
 
 - **Sessions.** A `SessionEnd` hook posts a one-line summary plus "done" and "open" task lists for each session. The folder name is mapped to a project; unknown folders land in an **Unsorted** bucket where one click maps them. Done items tick off matching tasks, open items become tasks. Project history shows sessions next to deploys, PRs and review state changes.
 - **Usage.** A small agent runs every 15 minutes, reads the token counts Claude Code already records in its local transcripts, and sends totals by day, project, model and machine: input, output, cache read, cache write. This covers your Claude subscription usage, which no API exposes.
@@ -60,7 +60,7 @@ Details, test commands and the exact payloads: [docs/CLAUDE-CODE-SETUP.md](docs/
 You need: a Cloudflare account, a Supabase account with a new empty project, a Google Cloud OAuth client (for sign-in; steps in [docs/PROVIDERS.md](docs/PROVIDERS.md#google-gmail-and-calendar)), Node 24.
 
 ```bash
-git clone https://github.com/vaxman14/hq && cd hq && npm install && npm run setup
+git clone https://github.com/vaxman14/vibecentral && cd hq && npm install && npm run setup
 ```
 
 Windows PowerShell: `node scripts/setup.mjs` instead of `npm run setup`, because `npm.ps1` is blocked by the default execution policy. Git Bash works as written.
@@ -69,7 +69,7 @@ The wizard logs you into Cloudflare and Supabase, asks for the Supabase service 
 
 Or start with the button:
 
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/vaxman14/hq)
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/vaxman14/vibecentral)
 
 The button does only the Worker half: it forks the repo, creates the Worker and sets up deploys on push. It does not create the database, deploy the sync function or set the secrets. Afterwards clone your fork and run `npm run setup` there; the wizard is re-run safe and lets you skip the Worker step it finds already done. Every step, by hand, is in [docs/DEPLOY.md](docs/DEPLOY.md).
 
@@ -80,14 +80,14 @@ Keys you skip during setup (Google client, Resend) can be pasted later under Set
 | Provider | What is read | Caveat |
 |---|---|---|
 | Cloudflare | Zones, DNS record counts, 7-day traffic and threats, Workers, tunnels, Registrar renewals | Scoped read-only token. Expiry only for domains on Cloudflare Registrar |
-| Netlify | Sites, deploys with state and build time | Netlify tokens cannot be scoped; the token acts as you, HQ only calls GET |
-| Supabase | Projects, health, database size, auth users, advisors | Management tokens cannot be scoped. Size and users via three fixed SELECTs. Free projects pause after a week idle (the cron keeps HQ's own project awake, not yours) |
+| Netlify | Sites, deploys with state and build time | Netlify tokens cannot be scoped; the token acts as you, Vibe Central only calls GET |
+| Supabase | Projects, health, database size, auth users, advisors | Management tokens cannot be scoped. Size and users via three fixed SELECTs. Free projects pause after a week idle (the cron keeps Vibe Central's own project awake, not yours) |
 | Stripe | 30-day revenue, subscriptions, balance, next payout | Restricted key with Read permissions only |
 | PayPal | Balances, 31 days of transactions | App with Transaction Search enabled; data lags a few hours |
 | Google | Gmail headers and snippets, Calendar events | Read-only scopes. Needs your own Google Cloud OAuth client. Message bodies are never fetched |
 | GitHub | Repos, open and recent PRs, Actions runs | Fine-grained token, read-only. Owned repos only |
 | App Store Connect | Apps, versions, review state, latest build, TestFlight | No aggregate rating; the API does not have one |
-| Google Play | Ratings, installs, crashes from the reports bucket, reviews | No release status: reading it needs a write call, which HQ will not make |
+| Google Play | Ratings, installs, crashes from the reports bucket, reviews | No release status: reading it needs a write call, which Vibe Central will not make |
 | Anthropic | API usage and cost by workspace and model | Admin keys cannot be scoped. Optional; skip it if that bothers you |
 
 Exact token click paths, permissions, endpoints and gaps per provider: [docs/PROVIDERS.md](docs/PROVIDERS.md).
@@ -106,7 +106,7 @@ Exact token click paths, permissions, endpoints and gaps per provider: [docs/PRO
 - **No writes.** GET only, except token exchanges, Cloudflare's read-only GraphQL analytics POST, and Supabase's SQL endpoint with three constant SELECT statements. The complete list is in [docs/PROVIDERS.md](docs/PROVIDERS.md) and `supabase/functions/sync/README.md`.
 - **Sign-in.** Google only, allow-list or first-sign-in-wins. Sessions last 30 days in an HttpOnly, Secure, SameSite cookie. "Sign out others" ends every other session.
 - **Ingest key.** The Claude Code hook and agent hold one key that can only write session and usage rows. It cannot read anything.
-- **No telemetry.** HQ never calls a server you do not run. There is no update check.
+- **No telemetry.** Vibe Central never calls a server you do not run. There is no update check.
 - **Delete everything.** Settings → Data → Delete everything removes every row including tokens and signs you out. Your providers are untouched; revoke the tokens there if you want to be thorough.
 
 ## FAQ
@@ -124,7 +124,7 @@ $0 on the free plans of Cloudflare Workers, Supabase and Resend. The Worker's on
 Because you probably connect Gmail anyway, and one well-tested OAuth flow is safer than a password form. There is no password to leak or reset.
 
 **Why does my Supabase project keep pausing?**
-Free Supabase projects pause after a week without activity. HQ's own project stays active because the cron calls it every minute. Your other projects are listed with status Paused when that happens; HQ cannot and will not unpause them.
+Free Supabase projects pause after a week without activity. Vibe Central's own project stays active because the cron calls it every minute. Your other projects are listed with status Paused when that happens; Vibe Central cannot and will not unpause them.
 
 **Can it show my Claude plan limits?**
 No. See the Claude Code section.

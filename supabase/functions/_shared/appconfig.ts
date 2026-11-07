@@ -7,7 +7,7 @@ export const APP_KEYS = [
   { key: 'google_client_id', env: 'GOOGLE_CLIENT_ID', label: 'Google OAuth client ID', secret: false, hint: 'Google Cloud → Google Auth Platform → Clients → Web application. Ends with .apps.googleusercontent.com', check: (v: string) => /\.apps\.googleusercontent\.com$/.test(v) || 'should end with .apps.googleusercontent.com' },
   { key: 'google_client_secret', env: 'GOOGLE_CLIENT_SECRET', label: 'Google OAuth client secret', secret: true, hint: 'Same client → Client secret (GOCSPX-…)', check: (v: string) => /^GOCSPX-/.test(v) || 'should start with GOCSPX-' },
   { key: 'resend_api_key', env: 'RESEND_API_KEY', label: 'Resend API key', secret: true, hint: 'resend.com → API Keys → Sending access (re_…)', check: (v: string) => /^re_/.test(v) || 'should start with re_' },
-  { key: 'alert_from', env: 'ALERT_FROM', label: 'Alert sender address', secret: false, hint: 'From address on a domain verified in Resend, e.g. HQ <hq@yourdomain.com>', check: (v: string) => /@/.test(v) || 'needs an email address' },
+  { key: 'alert_from', env: 'ALERT_FROM', label: 'Alert sender address', secret: false, hint: 'From address on a domain verified in Resend, e.g. Vibe Central <vibe@yourdomain.com>', check: (v: string) => /@/.test(v) || 'needs an email address' },
   // mirrored by the Worker so the sync function can build links and subjects; not shown in Settings
   { key: 'app_origin', env: 'APP_ORIGIN', label: 'Dashboard URL', secret: false, hint: '', check: (v: string) => /^https?:\/\//.test(v) || 'must be a URL', internal: true },
   { key: 'app_name', env: 'APP_NAME', label: 'App name', secret: false, hint: '', check: (_v: string) => true, internal: true },

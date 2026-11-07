@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// HQ one-command setup: npm run setup   (Windows PowerShell: node scripts/setup.mjs)
+// Vibe Central one-command setup: npm run setup   (Windows PowerShell: node scripts/setup.mjs)
 //
 // Takes a fresh clone plus free Cloudflare + Supabase accounts to a working dashboard:
 //   1 preflight  2 cloudflare login  3 supabase login + project  4 keys (.dev.vars)  5 worker vars (wrangler.jsonc)
@@ -44,7 +44,7 @@ const SKIP_DEPLOY = flag('--skip-deploy');
 const onlyIdx = argv.indexOf('--only');
 const ONLY = onlyIdx > -1 ? argv[onlyIdx + 1] : null;
 if (flag('--help') || flag('-h')) {
-  console.log(`HQ setup wizard
+  console.log(`Vibe Central setup wizard
 
 Usage: ${RUN_CMD} [--non-interactive] [--skip-deploy] [--only <step>]
 
@@ -171,7 +171,7 @@ async function confirm(q, def = true) {
 // ====================================================================================================
 async function stepPreflight() {
   const major = Number(process.versions.node.split('.')[0]);
-  if (major < 18) fail(`Node ${process.versions.node} is too old; HQ needs Node 18 or newer.`, 'Install the current LTS from https://nodejs.org and re-run.');
+  if (major < 18) fail(`Node ${process.versions.node} is too old; Vibe Central needs Node 18 or newer.`, 'Install the current LTS from https://nodejs.org and re-run.');
   ok(`node ${process.version}`);
   if (WIN) note('Windows: commands run through npx.cmd / npm.cmd (npm.ps1 is blocked by the default PowerShell policy; that is fine).');
 
@@ -191,7 +191,7 @@ async function stepPreflight() {
   const g = await run('git', ['--version'], { quiet: true });
   if (g.status === 0) ok(stripAnsi(g.out).trim()); else warn('git not found (not required to deploy, but you will want it to pull updates)');
   for (const f of [WRANGLER_CONFIG, 'supabase/config.toml', 'supabase/migrations', 'supabase/functions/sync']) {
-    if (!existsSync(f)) fail(`${f} is missing.`, 'Run the wizard from a complete clone of the HQ repository.');
+    if (!existsSync(f)) fail(`${f} is missing.`, 'Run the wizard from a complete clone of the Vibe Central repository.');
   }
   ok('repo layout');
 }
@@ -285,7 +285,7 @@ async function stepSupabase() {
     while (!ref) {
       if (!projects.length) {
         log('  You have no Supabase projects yet. Create a free one at https://supabase.com/dashboard/new (any name, any region;');
-        log('  the database password is not needed by HQ), then come back here.');
+        log('  the database password is not needed by Vibe Central), then come back here.');
       } else {
         log('  Your Supabase projects:');
         projects.forEach((p, i) => log(`    ${i + 1}. ${p.name.padEnd(28)} ${p.ref}${p.region ? `  (${p.region})` : ''}`));
@@ -322,7 +322,7 @@ async function stepKeys() {
   save();
 
   log('');
-  S.HQ_SETUP_APP_NAME = await ask('App name (shown in the dashboard title)', { def: S.HQ_SETUP_APP_NAME || 'HQ', required: true });
+  S.HQ_SETUP_APP_NAME = await ask('App name (shown in the dashboard title)', { def: S.HQ_SETUP_APP_NAME || 'Vibe Central', required: true });
 
   log('');
   log('  Owner Google account(s), comma separated. Only these addresses may sign in. Leave empty and the first');
@@ -334,8 +334,8 @@ async function stepKeys() {
   log('');
   log('  Custom domain (optional). It must be a zone in the Cloudflare account you logged in to; Cloudflare creates the');
   log('  DNS record on deploy. Leave empty to use the free <name>.workers.dev URL.');
-  S.HQ_SETUP_DOMAIN = cleanDomain(await ask('Custom domain, e.g. hq.example.com', {
-    def: S.HQ_SETUP_DOMAIN || '', check: (v) => /^[a-z0-9.-]+\.[a-z]{2,}$/.test(cleanDomain(v)) || 'a hostname like hq.example.com (no https://, no path)',
+  S.HQ_SETUP_DOMAIN = cleanDomain(await ask('Custom domain, e.g. vibe.example.com', {
+    def: S.HQ_SETUP_DOMAIN || '', check: (v) => /^[a-z0-9.-]+\.[a-z]{2,}$/.test(cleanDomain(v)) || 'a hostname like vibe.example.com (no https://, no path)',
   }));
   save();
 
@@ -405,7 +405,7 @@ async function stepDb() {
   const ref = S.HQ_SETUP_PROJECT_REF;
   if (!ref) fail('No Supabase project chosen yet.', `${RUN_CMD} --only supabase`);
   if (S.HQ_SETUP_DB_PUSHED === ref && await skipIfDone('Database schema')) return;
-  log('  This installs the HQ schema (tables, RLS, the app_config key store) into your Supabase project.');
+  log('  This installs the Vibe Central schema (tables, RLS, the app_config key store) into your Supabase project.');
   await ensureLinked(ref);
   const args = ['supabase', 'db', 'push'];
   const hasLinked = await supportsFlag('supabase', ['db', 'push'], '--linked');
@@ -516,7 +516,7 @@ async function stepVerify() {
 
   log('');
   log('==================================================================');
-  log(`  ${S.HQ_SETUP_APP_NAME || 'HQ'} is ${allGood ? 'ready' : 'deployed, with warnings above'}`);
+  log(`  ${S.HQ_SETUP_APP_NAME || 'Vibe Central'} is ${allGood ? 'ready' : 'deployed, with warnings above'}`);
   log('==================================================================');
   if (origin) {
     log(`  Dashboard:        ${origin}`);
@@ -545,7 +545,7 @@ const DEPLOY_STEPS = new Set(['db', 'function', 'worker']);
 
 async function main() {
   log('');
-  log(`HQ setup${NONINT ? ' (non-interactive)' : ''}${SKIP_DEPLOY ? ' (skip deploy)' : ''}${ONLY ? ` (only: ${ONLY})` : ''}`);
+  log(`Vibe Central setup${NONINT ? ' (non-interactive)' : ''}${SKIP_DEPLOY ? ' (skip deploy)' : ''}${ONLY ? ` (only: ${ONLY})` : ''}`);
   log(`Repo: ${ROOT}`);
   if (!NONINT) log('Enter keeps the value in [brackets]. Secrets are typed hidden and never printed. Ctrl+C stops; re-running resumes.');
   if (WIN && !ONLY) log('Tip: in Windows PowerShell run  node scripts/setup.mjs  (npm.ps1 is blocked by the default execution policy).');

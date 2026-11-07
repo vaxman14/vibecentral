@@ -1,4 +1,4 @@
-# Deploy HQ by hand
+# Deploy Vibe Central by hand
 
 `npm run setup` does everything on this page for you. Read on if you want to see every command, if the wizard failed halfway, or if you prefer to run the steps yourself.
 
@@ -15,12 +15,12 @@ Nothing is hosted by the author. There is no telemetry and no update check.
 
 - Node 24 (18 or newer works for the local agent scripts).
 - A Cloudflare account. Workers Free is enough. A custom domain is optional; `<name>.<subdomain>.workers.dev` works.
-- A Supabase account with a new, empty project for HQ. Note the project ref (the part before `.supabase.co`) and the service role key (Project Settings → API keys → `service_role`, or a secret key `sb_secret_...`).
+- A Supabase account with a new, empty project for Vibe Central. Note the project ref (the part before `.supabase.co`) and the service role key (Project Settings → API keys → `service_role`, or a secret key `sb_secret_...`).
 - A Google Cloud OAuth client. Sign-in to the dashboard uses it, so you need it before the first sign-in. Steps in [PROVIDERS.md](PROVIDERS.md#google-gmail-and-calendar); the Gmail and Calendar APIs can be enabled later.
 - Optional: a Resend API key for alert emails.
 
 ```bash
-git clone https://github.com/vaxman14/hq
+git clone https://github.com/vaxman14/vibecentral
 cd hq
 npm install
 cp .dev.vars.example .dev.vars
@@ -56,7 +56,7 @@ npx supabase secrets set --project-ref <ref> \
   GOOGLE_CLIENT_ID="..." \
   GOOGLE_CLIENT_SECRET="..." \
   RESEND_API_KEY="..." \
-  ALERT_FROM="HQ <hq@yourdomain.com>"
+  ALERT_FROM="Vibe Central <vibe@yourdomain.com>"
 ```
 
 `--no-verify-jwt` is required: the function authenticates callers with its own `x-hq-sync-key` header, not a Supabase JWT (`supabase/config.toml` sets the same). `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` are injected by Supabase; do not set them (the CLI rejects `SUPABASE_*` names, which is why you cannot pass `.dev.vars` itself). Google and Resend values can be left out and entered later under Settings → Setup keys; values there override the secrets.
@@ -75,11 +75,11 @@ Expected: `{"ok":true,"ran":[],...}` (no accounts yet). A wrong key returns 401.
 Edit `wrangler.jsonc`:
 
 - `name`: the Worker name (becomes `<name>.<subdomain>.workers.dev`).
-- `vars.APP_ORIGIN`: your origin, for example `https://hq.yourdomain.com` or `https://hq.yoursubdomain.workers.dev`.
+- `vars.APP_ORIGIN`: your origin, for example `https://vibe.yourdomain.com` or `https://hq.yoursubdomain.workers.dev`.
 - `vars.RP_ID`: the hostname of that origin.
 - `vars.ALLOWED_GOOGLE_EMAILS`: comma-separated Google addresses allowed to sign in. Leave it empty to let the first Google account that signs in become the owner.
-- `vars.APP_NAME`: the name shown in the sidebar and in alert emails (default `HQ`).
-- `workers_dev: true` serves the app at `https://hq.<your-subdomain>.workers.dev`. For a custom domain in a zone of the same Cloudflare account, replace it with `"routes": [{ "pattern": "hq.yourdomain.com", "custom_domain": true }]`.
+- `vars.APP_NAME`: the name shown in the sidebar and in alert emails (default `Vibe Central`).
+- `workers_dev: true` serves the app at `https://hq.<your-subdomain>.workers.dev`. For a custom domain in a zone of the same Cloudflare account, replace it with `"routes": [{ "pattern": "vibe.yourdomain.com", "custom_domain": true }]`.
 
 Then:
 
@@ -96,7 +96,7 @@ For deploys on push: Cloudflare dashboard → Workers & Pages → your Worker �
 
 ### The "Deploy to Cloudflare" button
 
-The README's button opens `https://deploy.workers.cloudflare.com/?url=https://github.com/vaxman14/hq`. It forks the repo into your GitHub, creates the Worker and sets up deploys on push. It does only the Worker half: it does not create the Supabase project, push the schema, deploy the sync function or set secrets. After the button, clone your fork and run `npm run setup` (Windows PowerShell: `node scripts/setup.mjs`) to finish the database side and load the Worker secrets. The wizard is re-run safe: it keeps its answers in `.dev.vars` and lets you skip a finished step with Enter. To run one step on its own use `--only <step>` with one of `preflight`, `cloudflare`, `supabase`, `keys`, `vars`, `db`, `function`, `worker`, `verify`, for example `npm run setup -- --only db` (the `--` is needed so npm passes the flag through).
+The README's button opens `https://deploy.workers.cloudflare.com/?url=https://github.com/vaxman14/vibecentral`. It forks the repo into your GitHub, creates the Worker and sets up deploys on push. It does only the Worker half: it does not create the Supabase project, push the schema, deploy the sync function or set secrets. After the button, clone your fork and run `npm run setup` (Windows PowerShell: `node scripts/setup.mjs`) to finish the database side and load the Worker secrets. The wizard is re-run safe: it keeps its answers in `.dev.vars` and lets you skip a finished step with Enter. To run one step on its own use `--only <step>` with one of `preflight`, `cloudflare`, `supabase`, `keys`, `vars`, `db`, `function`, `worker`, `verify`, for example `npm run setup -- --only db` (the `--` is needed so npm passes the flag through).
 
 ## 4. Resend sending domain (optional)
 
@@ -121,8 +121,8 @@ It registers the domain in Resend, adds the records to Cloudflare and requests v
 
 | Where | Name | Value |
 |---|---|---|
-| Worker var (`wrangler.jsonc`) | `APP_NAME` | name shown in the app and in alert subjects, default `HQ` |
-| Worker var | `APP_ORIGIN` | `https://hq.yourdomain.com` or your workers.dev URL, no trailing slash |
+| Worker var (`wrangler.jsonc`) | `APP_NAME` | name shown in the app and in alert subjects, default `Vibe Central` |
+| Worker var | `APP_ORIGIN` | `https://vibe.yourdomain.com` or your workers.dev URL, no trailing slash |
 | Worker var | `RP_ID` | hostname of `APP_ORIGIN` |
 | Worker var | `ALLOWED_GOOGLE_EMAILS` | comma-separated allow-list, or empty for first-sign-in-wins |
 | Worker secret | `SUPABASE_URL` | `https://<ref>.supabase.co` |

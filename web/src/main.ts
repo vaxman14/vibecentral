@@ -1,4 +1,4 @@
-// HQ web entry: auth check → shell → hash router. Keeps the sidebar chip and the header badge fresh.
+// Vibe Central web entry: auth check → shell → hash router. Keeps the sidebar chip and the header badge fresh.
 import type { MeDTO } from '@shared/types.ts';
 import { ago } from '@shared/util.ts';
 import { get, initApi, setUnauthorizedHandler } from './api.ts';
@@ -67,6 +67,6 @@ export function applyBranding(b: { appName: string; host: string; ownerName?: st
   if (!b) return;
   document.title = b.appName;
   const set = (sel: string, text: string) => { const el = document.querySelector(sel); if (el) el.textContent = text; };
-  set('#brandName', b.appName); set('#brandHost', b.host); set('#brandMk', b.appName[0]?.toUpperCase() || 'H');
+  set('#brandName', b.appName); set('#brandHost', b.host);
   set('#credit', b.appName); set('#footName', `${b.appName} · read-only view of your accounts`);
 }

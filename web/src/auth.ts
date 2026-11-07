@@ -18,7 +18,7 @@ export function showSignIn(status?: AuthStatus | null, error?: string): void {
   const err = error ?? new URLSearchParams(location.search).get('error') ?? '';
   const passkeys = false; // passkeys are not offered: Google sign-in is the only method
   void status; void browserSupportsWebAuthn;
-  const b = status?.branding ?? { appName: 'HQ', host: location.host, origin: location.origin, ownerName: '', contact: '' };
+  const b = status?.branding ?? { appName: 'Vibe Central', host: location.host, origin: location.origin, ownerName: '', contact: '' };
   const owner = b.ownerName || 'its owner';
   const claimed = status?.claimed !== false;
   document.title = b.appName;
@@ -26,7 +26,7 @@ export function showSignIn(status?: AuthStatus | null, error?: string): void {
   wrap.className = 'signin-wrap';
   wrap.innerHTML = `<div class="landing">
     <div class="landing-copy">
-      <div class="brand"><div class="mk">${esc(b.appName[0]?.toUpperCase() || 'H')}</div><div>${esc(b.appName)}<small>${esc(b.host)}</small></div></div>
+      <div class="brand"><div class="mk"><img src="/logo.svg" alt=""></div><div>${esc(b.appName)}<small>${esc(b.host)}</small></div></div>
       <h1>A private dashboard for one person.</h1>
       <p>${esc(b.appName)} is ${esc(owner)}&rsquo;s personal, read-only view of their own projects and accounts: domains, sites, databases, revenue, app stores, mail, calendar and Claude usage, all in one place.</p>
       <p>It is not a product or a service. There is nothing to sign up for: only ${esc(owner)} can sign in, with an allow-listed Google account. Every other account is refused.</p>

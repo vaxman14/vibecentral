@@ -1,6 +1,6 @@
 export interface Env {
   ASSETS: Fetcher;
-  APP_NAME?: string;          // shown in the UI, default "HQ"
+  APP_NAME?: string;          // shown in the UI, default "Vibe Central"
   APP_ORIGIN?: string;        // optional; derived from the request when empty (workers.dev works)
   RP_ID?: string;             // optional; derived from APP_ORIGIN
   ALLOWED_GOOGLE_EMAILS?: string; // optional; empty = the first Google sign-in claims ownership

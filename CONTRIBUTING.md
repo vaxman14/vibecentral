@@ -1,11 +1,11 @@
 # Contributing
 
-Issues and pull requests are welcome. HQ is a small, single-user tool, so please keep changes small and in the spirit of the project: read-only, self-hosted, no telemetry.
+Issues and pull requests are welcome. Vibe Central is a small, single-user tool, so please keep changes small and in the spirit of the project: read-only, self-hosted, no telemetry.
 
 ## Run it locally
 
 ```bash
-git clone https://github.com/vaxman14/hq
+git clone https://github.com/vaxman14/vibecentral
 cd hq
 npm install
 npm run dev
@@ -31,7 +31,7 @@ There is no test suite. Please run the type checks before opening a pull request
 ## Ground rules
 
 - **Connectors stay read-only.** A provider module may only call GET endpoints. The only exceptions are token exchanges and read-only POST analytics or SELECT queries that have no GET equivalent. Every exception is listed in `supabase/functions/sync/README.md` under "Non-GET calls" and in [docs/PROVIDERS.md](docs/PROVIDERS.md). If your change adds one, add it to both lists and explain why there is no GET alternative. Pull requests that write to a provider will not be merged.
-- **No telemetry.** HQ never phones home. Pull requests that add analytics, crash reporting, update checks or any call to a server the user does not run will not be merged.
+- **No telemetry.** Vibe Central never phones home. Pull requests that add analytics, crash reporting, update checks or any call to a server the user does not run will not be merged.
 - **Least privilege.** When a provider lets you scope a token, document the minimum scope in `docs/PROVIDERS.md` and in the form hint in `supabase/functions/_shared/forms.ts`.
 - **Secrets never leave the server.** Provider tokens are encrypted at rest and decrypted only inside the sync function. Do not add API routes that return them, not even masked, beyond the existing "Setup keys" preview.
 - **One user.** Do not add multi-tenant features, roles or sign-up. That is out of scope by design.

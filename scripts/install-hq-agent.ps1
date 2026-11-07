@@ -1,11 +1,11 @@
 <#
 .SYNOPSIS
-  Installs the HQ Claude Code hook + usage agent on this Windows PC (current user only).
+  Installs the Vibe Central Claude Code hook + usage agent on this Windows PC (current user only).
 
 .DESCRIPTION
   - copies hq-session-end.mjs, hq-usage-agent.mjs, hq-hook-settings.mjs, CLAUDE-HQ-snippet.md to %USERPROFILE%\.hq\
   - writes %USERPROFILE%\.hq\config.json  { url, ingestKey, machine }
-  - registers the Scheduled Task "HQ usage agent" (every 15 min, hidden, runs as you while logged on)
+  - registers the Scheduled Task "Vibe Central usage agent" (every 15 min, hidden, runs as you while logged on)
   - merges the SessionEnd hook into %USERPROFILE%\.claude\settings.json (keeps your other hooks)
   - with -Global: appends the HQ: block instructions to %USERPROFILE%\.claude\CLAUDE.md
   - ends with a ping and a dry run so you can see it works
@@ -26,7 +26,7 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
-$TaskName   = 'HQ usage agent'
+$TaskName   = 'Vibe Central usage agent'
 $HqDir      = Join-Path $env:USERPROFILE '.hq'
 $ClaudeDir  = Join-Path $env:USERPROFILE '.claude'
 $Settings   = Join-Path $ClaudeDir 'settings.json'
@@ -116,7 +116,7 @@ $settings = New-ScheduledTaskSettingsSet -Hidden -StartWhenAvailable -MultipleIn
   -ExecutionTimeLimit (New-TimeSpan -Minutes 10) -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries
 $principal = New-ScheduledTaskPrincipal -UserId "$env:USERDOMAIN\$env:USERNAME" -LogonType Interactive -RunLevel Limited
 Register-ScheduledTask -TaskName $TaskName -Action $action -Trigger $trigger -Settings $settings -Principal $principal `
-  -Description 'Sends Claude Code token usage (numbers only, never content) to the HQ dashboard.' -Force | Out-Null
+  -Description 'Sends Claude Code token usage (numbers only, never content) to the Vibe Central dashboard.' -Force | Out-Null
 Write-Host "registered. Inspect with: Get-ScheduledTask -TaskName '$TaskName' | Get-ScheduledTaskInfo"
 
 # ---------------------------------------------------------------- hook

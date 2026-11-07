@@ -1,6 +1,6 @@
 # Supabase CLI configuration for HQ.
 # Local dev: `npx supabase start`; deploy the sync function with `npm run functions:deploy`.
-project_id = "hq"
+project_id = "vibecentral"
 
 [api]
 enabled = true

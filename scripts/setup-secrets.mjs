@@ -17,7 +17,7 @@ const ITEMS = [
     where: 'Project Settings → API keys → service_role (legacy, starts with eyJ…) or a Secret key (starts with sb_secret_). Never the anon/publishable key.',
     check: (v) => /^(eyJ|sb_secret_)/.test(v) || 'should start with eyJ or sb_secret_' },
   { key: 'GOOGLE_CLIENT_ID', secret: false, label: 'Google OAuth client ID',
-    where: 'console.cloud.google.com → your HQ project → Google Auth Platform → Clients → the Web application client. Ends with .apps.googleusercontent.com',
+    where: 'console.cloud.google.com → your Vibe Central project → Google Auth Platform → Clients → the Web application client. Ends with .apps.googleusercontent.com',
     check: (v) => /\.apps\.googleusercontent\.com$/.test(v) || 'should end with .apps.googleusercontent.com' },
   { key: 'GOOGLE_CLIENT_SECRET', secret: true, label: 'Google OAuth client secret',
     where: 'Same client → Client secret (starts with GOCSPX-)',
@@ -25,7 +25,7 @@ const ITEMS = [
   { key: 'RESEND_API_KEY', secret: true, label: 'Resend API key',
     where: 'resend.com → API Keys → Create → Sending access, domain your-domain.com. Starts with re_',
     check: (v) => /^re_/.test(v) || 'should start with re_' },
-  { key: 'ALERT_FROM', secret: false, label: 'Alert sender', default: 'HQ <hq@yourdomain.com>',
+  { key: 'ALERT_FROM', secret: false, label: 'Alert sender', default: 'Vibe Central <vibe@yourdomain.com>',
     where: 'The From address for alert emails.', check: (v) => /@/.test(v) || 'needs an email address' },
 ];
 const GENERATED = [
@@ -79,7 +79,7 @@ for (const f of files) {
 stop();
 
 // ---------- write ----------
-writeDevVars(out, { header: '# HQ secrets (gitignored). Written by scripts/setup-secrets.mjs. Load into Cloudflare with: npm run secrets:worker' });
+writeDevVars(out, { header: '# Vibe Central secrets (gitignored). Written by scripts/setup-secrets.mjs. Load into Cloudflare with: npm run secrets:worker' });
 
 const missing = ORDER.filter((k) => isPlaceholder(out[k]));
 console.log(`\nWrote ${FILE}.`);

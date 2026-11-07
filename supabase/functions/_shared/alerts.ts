@@ -14,8 +14,8 @@ type Db = SupabaseClient;
 
 /** Dashboard URL and name, mirrored into app_config by the Worker; set by flushAlerts before rendering. */
 let APP_URL = '';
-let APP_NAME = 'HQ';
-export function setIdentity(origin: string, name: string): void { APP_URL = origin || ''; APP_NAME = name || 'HQ'; }
+let APP_NAME = 'Vibe Central';
+export function setIdentity(origin: string, name: string): void { APP_URL = origin || ''; APP_NAME = name || 'Vibe Central'; }
 
 interface HqUser { tz: string; quiet_start: string; quiet_end: string; notifications: Record<string, boolean> | null; alert_to: string }
 interface AccountLite { id: string; provider: Provider; label: string; status: string; last_error: string | null }

@@ -1,4 +1,4 @@
-# HQ API contract
+# Vibe Central API contract
 
 All endpoints live on the Worker under `/api`. Responses are JSON. Errors: `{ "error": "message" }` with 4xx/5xx.
 Browser calls carry the `hq_session` cookie (HttpOnly, Secure, SameSite=Lax). Unauthenticated calls to anything but `/api/auth/*` and `/api/ingest*` get `401 {error:"unauthorized"}`.

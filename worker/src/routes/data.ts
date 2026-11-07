@@ -21,7 +21,7 @@ dataRoutes.get('/export', async (c) => {
     many(d.from('passkeys').select('id,label,created_at,last_used_at,device_type'), 'passkeys'),
   ]);
   const body = {
-    exportedAt: new Date().toISOString(), app: 'HQ', version: 1,
+    exportedAt: new Date().toISOString(), app: 'Vibe Central', version: 1,
     settings: settingsDTO(user),
     accounts: accounts.map(accountDTO), // labels + meta only, never secrets
     projects, links, tasks, history, folders, usage, alerts, passkeys,

@@ -1,12 +1,12 @@
 #!/usr/bin/env node
-// HQ - installer helper (pure Node, no jq). Used by install-hq-agent.ps1 / .sh.
+// Vibe Central - installer helper (pure Node, no jq). Used by install-hq-agent.ps1 / .sh.
 //
 //   Merge the SessionEnd hook into Claude Code's settings.json without touching other hooks:
 //     node hq-hook-settings.mjs --settings ~/.claude/settings.json --command '<cmd>' [--timeout 10]
 //   Remove it again:
 //     node hq-hook-settings.mjs --settings ~/.claude/settings.json --remove
 //
-//   Append the HQ block instructions to a CLAUDE.md (idempotent, marker-delimited):
+//   Append the Vibe Central block instructions to a CLAUDE.md (idempotent, marker-delimited):
 //     node hq-hook-settings.mjs --claude-md ~/.claude/CLAUDE.md --snippet CLAUDE-HQ-snippet.md
 //   Remove them:
 //     node hq-hook-settings.mjs --claude-md ~/.claude/CLAUDE.md --remove
@@ -66,7 +66,7 @@ function removeHook(settingsFile) {
     const hooks = g.hooks.filter((h) => { const mine = h && OURS.test(String(h.command || '')); if (mine) removed++; return !mine; });
     return { ...g, hooks };
   }).filter((g) => !g || !Array.isArray(g.hooks) || g.hooks.length > 0);
-  if (!removed) { console.log('SessionEnd hook for HQ not present'); return; }
+  if (!removed) { console.log('SessionEnd hook for Vibe Central not present'); return; }
   if (kept.length) s.hooks.SessionEnd = kept; else delete s.hooks.SessionEnd;
   if (s.hooks && Object.keys(s.hooks).length === 0) delete s.hooks;
   writeFile(settingsFile, JSON.stringify(s, null, 2) + '\n');
@@ -82,20 +82,20 @@ function appendSnippet(mdFile, snippetFile) {
     const next = text.replace(re, block);
     if (next === text) { console.log(`${mdFile} already up to date`); return; }
     writeFile(mdFile, next);
-    console.log(`updated HQ section in ${mdFile}`);
+    console.log(`updated Vibe Central section in ${mdFile}`);
     return;
   }
   writeFile(mdFile, (text && !text.endsWith('\n') ? text + '\n' : text) + (text ? '\n' : '') + block);
-  console.log(`appended HQ section to ${mdFile}`);
+  console.log(`appended Vibe Central section to ${mdFile}`);
 }
 
 function removeSnippet(mdFile) {
   if (!fs.existsSync(mdFile)) { console.log('no CLAUDE.md, nothing to remove'); return; }
   const text = fs.readFileSync(mdFile, 'utf8');
   const re = new RegExp(`\\n?${MARK_START}[\\s\\S]*?${MARK_END}\\n?`);
-  if (!re.test(text)) { console.log('HQ section not present in ' + mdFile); return; }
+  if (!re.test(text)) { console.log('Vibe Central section not present in ' + mdFile); return; }
   writeFile(mdFile, text.replace(re, '\n').replace(/\n{3,}/g, '\n\n'));
-  console.log(`removed HQ section from ${mdFile}`);
+  console.log(`removed Vibe Central section from ${mdFile}`);
 }
 
 try {

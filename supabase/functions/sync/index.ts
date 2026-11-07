@@ -1,4 +1,4 @@
-// HQ sync Edge Function. Called every minute by pg_cron ({source:'cron'}) and on demand by the Worker
+// Vibe Central sync Edge Function. Called every minute by pg_cron ({source:'cron'}) and on demand by the Worker
 // ({accountId} or {all:true}). Reads provider APIs (GET only, see _shared/providers/*) and writes
 // snapshots / metrics / mail_items / cal_events / history, then evaluates and emails alerts.
 import { createClient, type SupabaseClient } from 'npm:@supabase/supabase-js@2';
@@ -67,7 +67,7 @@ Deno.serve(async (req: Request) => {
     const denoEnv = { GOOGLE_CLIENT_ID: env('GOOGLE_CLIENT_ID', false), GOOGLE_CLIENT_SECRET: env('GOOGLE_CLIENT_SECRET', false), RESEND_API_KEY: env('RESEND_API_KEY', false), ALERT_FROM: env('ALERT_FROM', false) };
     shared.env.googleClientId = resolveKey(appCfg, denoEnv, 'google_client_id');
     shared.env.googleClientSecret = resolveKey(appCfg, denoEnv, 'google_client_secret');
-    setIdentity(appCfg.app_origin || env('APP_ORIGIN', false), appCfg.app_name || env('APP_NAME', false) || 'HQ');
+    setIdentity(appCfg.app_origin || env('APP_ORIGIN', false), appCfg.app_name || env('APP_NAME', false) || 'Vibe Central');
 
     const accounts = await pickAccounts(db, body, now);
     const queue = [...accounts];

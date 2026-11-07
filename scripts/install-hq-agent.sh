@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# Installs the HQ Claude Code hook + usage agent on macOS (current user only).
+# Installs the Vibe Central Claude Code hook + usage agent on macOS (current user only).
 #
 #   - copies hq-session-end.mjs, hq-usage-agent.mjs, hq-hook-settings.mjs, CLAUDE-HQ-snippet.md to ~/.hq/
 #   - writes ~/.hq/config.json  { url, ingestKey, machine }
-#   - installs a launchd agent ~/Library/LaunchAgents/com.hq.usage-agent.plist (every 15 min, at login)
+#   - installs a launchd agent ~/Library/LaunchAgents/com.vibecentral.usage-agent.plist (every 15 min, at login)
 #   - merges the SessionEnd hook into ~/.claude/settings.json (keeps your other hooks; no jq needed)
 #   - with --global: appends the HQ: block instructions to ~/.claude/CLAUDE.md
 #   - ends with a ping and a dry run
@@ -31,7 +31,7 @@ CLAUDE_DIR="$HOME/.claude"
 SETTINGS="$CLAUDE_DIR/settings.json"
 CLAUDE_MD="$CLAUDE_DIR/CLAUDE.md"
 CONFIG="$HQ_DIR/config.json"
-LABEL="com.hq.usage-agent"
+LABEL="com.vibecentral.usage-agent"
 PLIST="$HOME/Library/LaunchAgents/$LABEL.plist"
 FILES=(hq-session-end.mjs hq-usage-agent.mjs hq-hook-settings.mjs CLAUDE-HQ-snippet.md)
 

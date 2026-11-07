@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// HQ - Claude Code SessionEnd hook.
+// Vibe Central - Claude Code SessionEnd hook.
 //
 // Claude Code runs this when a session ends (hook configured in ~/.claude/settings.json) and
 // pipes JSON on stdin: { session_id, transcript_path, cwd, permission_mode, hook_event_name, reason }.
@@ -159,13 +159,13 @@ function parseTranscript(file) {
   return out;
 }
 
-// ---------------------------------------------------------------- HQ block
+// ---------------------------------------------------------------- Vibe Central block
 
 function splitItems(value) {
   return value.split(';').map((s) => s.trim()).filter(Boolean);
 }
 
-// Returns { summary, done, open } or null when no HQ block is present.
+// Returns { summary, done, open } or null when no Vibe Central block is present.
 function parseHqBlock(text) {
   const lines = text.replace(/\r/g, '').split('\n');
   let startIdx = -1;
@@ -210,11 +210,11 @@ function dedupe(arr) {
   return arr.filter((s) => { const k = s.toLowerCase(); if (seen.has(k)) return false; seen.add(k); return true; });
 }
 
-// Strips the HQ block itself plus common markdown, then returns the first sentence (<= 140 chars).
+// Strips the Vibe Central block itself plus common markdown, then returns the first sentence (<= 140 chars).
 function fallbackSummary(text) {
   let t = text.replace(/\r/g, '');
-  t = t.replace(/^\s*hq:\s*$[\s\S]*?(?:\n\s*\n|$)/im, ' ');   // multi-line HQ block
-  t = t.replace(/^\s*hq:\s.*$/im, ' ');                        // single-line HQ
+  t = t.replace(/^\s*hq:\s*$[\s\S]*?(?:\n\s*\n|$)/im, ' ');   // multi-line Vibe Central block
+  t = t.replace(/^\s*hq:\s.*$/im, ' ');                        // single-line Vibe Central
   t = t.replace(/```[\s\S]*?```/g, ' ');                       // fenced code
   t = t.replace(/`([^`]*)`/g, '$1');                           // inline code
   t = t.replace(/!\[[^\]]*\]\([^)]*\)/g, ' ');                 // images

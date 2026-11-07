@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "hq",
+  "name": "vibecentral",
   "main": "worker/src/index.ts",
   "compatibility_date": "2025-10-01",
   "compatibility_flags": ["nodejs_compat"],
@@ -11,7 +11,7 @@
   "observability": { "enabled": true },
   "triggers": { "crons": ["* * * * *"] },
   "vars": {
-    "APP_NAME": "HQ",
+    "APP_NAME": "Vibe Central",
     "APP_ORIGIN": "",
     "RP_ID": "",
     "ALLOWED_GOOGLE_EMAILS": ""

@@ -2,7 +2,7 @@
 # Provider tokens (Cloudflare, Netlify, Stripe, …) are NOT env vars: you paste them in the dashboard under Connections,
 # where they are encrypted with HQ_MASTER_KEY and stored in Supabase.
 
-# --- Supabase (the project you created for HQ) ---
+# --- Supabase (the project you created for Vibe Central) ---
 SUPABASE_URL=https://xxxxxxxxxxxx.supabase.co
 SUPABASE_SERVICE_ROLE_KEY=                    # Project Settings → API keys → service_role (or a secret key sb_secret_…)
 
@@ -17,7 +17,7 @@ GOOGLE_CLIENT_SECRET=
 
 # --- Resend (alerts) ---
 RESEND_API_KEY=
-ALERT_FROM=HQ <hq@yourdomain.com>
+ALERT_FROM=Vibe Central <vibe@yourdomain.com>
 
 # --- One-time helper (optional): Cloudflare token with DNS:Edit on your sending domain, used only by scripts/resend-dns.mjs ---
 CF_DNS_TOKEN=

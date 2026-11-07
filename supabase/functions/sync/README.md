@@ -33,7 +33,7 @@ npx supabase secrets set \
   HQ_MASTER_KEY=… \
   HQ_SYNC_SECRET=… \
   RESEND_API_KEY=… \
-  "ALERT_FROM=HQ <hq@yourdomain.com>" \
+  "ALERT_FROM=Vibe Central <vibe@yourdomain.com>" \
   GOOGLE_CLIENT_ID=… \
   GOOGLE_CLIENT_SECRET=…
 ```

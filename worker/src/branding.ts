@@ -16,7 +16,7 @@ export function rpIdOf(env: Env, req: Request): string {
   return env.RP_ID || new URL(originOf(env, req)).hostname;
 }
 export function appName(env: Env): string {
-  return (env.APP_NAME || 'HQ').trim().slice(0, 40) || 'HQ';
+  return (env.APP_NAME || 'Vibe Central').trim().slice(0, 40) || 'Vibe Central';
 }
 export function envEmails(env: Env): string[] {
   return (env.ALLOWED_GOOGLE_EMAILS || '').split(',').map((s) => s.trim().toLowerCase()).filter(Boolean);

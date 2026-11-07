@@ -13,7 +13,7 @@ export const FORMS: Record<Provider, ProviderForm> = {
   netlify: {
     fields: [{ key: 'accessToken', label: 'Personal access token', hint: 'User settings → Applications → Personal access tokens', secret: true }],
     metaFields: [],
-    help: 'Netlify tokens have no scopes. HQ only ever calls GET endpoints.',
+    help: 'Netlify tokens have no scopes. Vibe Central only ever calls GET endpoints.',
   },
   supabase: {
     fields: [{ key: 'accessToken', label: 'Access token', hint: 'supabase.com/dashboard/account/tokens', secret: true }],

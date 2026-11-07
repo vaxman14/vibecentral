@@ -38,7 +38,7 @@ export function readDevVars(file = DEV_VARS) {
 
 /** Write the whole map back (well-known keys first, setup state last). Values are written verbatim. */
 export function writeDevVars(vars, { file = DEV_VARS, header } = {}) {
-  const lines = [header || '# HQ secrets (gitignored). Written by scripts/setup.mjs. Load into Cloudflare with: npm run secrets:worker'];
+  const lines = [header || '# Vibe Central secrets (gitignored). Written by scripts/setup.mjs. Load into Cloudflare with: npm run secrets:worker'];
   for (const k of ORDER) if (vars[k] !== undefined) lines.push(`${k}=${vars[k]}`);
   const rest = Object.keys(vars).filter((k) => !ORDER.includes(k));
   for (const k of rest.filter((k) => !k.startsWith('HQ_SETUP_'))) lines.push(`${k}=${vars[k]}`);
@@ -83,7 +83,7 @@ export function writeJson(file, obj) {
  */
 export function applyWranglerConfig(cfg, { appName, origin, emails, domain, accountId }) {
   cfg.vars = { ...(cfg.vars || {}) };
-  cfg.vars.APP_NAME = appName || 'HQ';
+  cfg.vars.APP_NAME = appName || 'Vibe Central';
   cfg.vars.APP_ORIGIN = origin || '';
   cfg.vars.RP_ID = origin ? new URL(origin).hostname : '';
   cfg.vars.ALLOWED_GOOGLE_EMAILS = emails || '';

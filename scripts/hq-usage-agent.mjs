@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// HQ - Claude Code subscription usage agent.
+// Vibe Central - Claude Code subscription usage agent.
 //
 // Scans the local Claude Code transcripts (~/.claude/projects/**/*.jsonl), adds up the token
 // usage that Claude Code already records on every assistant message, and sends per-day totals

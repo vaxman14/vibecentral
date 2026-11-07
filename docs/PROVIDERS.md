@@ -1,6 +1,6 @@
 # Providers: tokens, permissions, what is read
 
-One section per connector. Each says which token to create (the click path), the minimum permissions, what HQ reads, which non-GET calls exist and why, and what it cannot show.
+One section per connector. Each says which token to create (the click path), the minimum permissions, what Vibe Central reads, which non-GET calls exist and why, and what it cannot show.
 
 General rules that hold for every provider:
 
@@ -58,7 +58,7 @@ Account Resources: include every account you want to see. Zone Resources: all zo
 
 **Create the token:** app.netlify.com → User settings → Applications → Personal access tokens → New access token.
 
-**Permissions:** none to choose. Netlify personal access tokens have no scopes and act as you. HQ only ever calls GET endpoints with it, but the token itself could do anything your account can. Keep that in mind, and revoke it from the same page if you stop using HQ.
+**Permissions:** none to choose. Netlify personal access tokens have no scopes and act as you. Vibe Central only ever calls GET endpoints with it, but the token itself could do anything your account can. Keep that in mind, and revoke it from the same page if you stop using Vibe Central.
 
 **What is read:** sites (name, URL, custom domain, team, repo) and the last 15 deploys of each site from the last 7 days: state, branch, title, build time, error message.
 
@@ -72,7 +72,7 @@ Account Resources: include every account you want to see. Zone Resources: all zo
 
 **Create the token:** supabase.com/dashboard/account/tokens → Generate new token.
 
-**Permissions:** none to choose. Supabase Management API tokens are full access for your login. HQ only reads, but the token could manage every project. Same advice as Netlify: one token per login, revoke it when you stop.
+**Permissions:** none to choose. Supabase Management API tokens are full access for your login. Vibe Central only reads, but the token could manage every project. Same advice as Netlify: one token per login, revoke it when you stop.
 
 **What is read:** organizations; projects with region, status, created date; health of db, auth, storage and rest; security and performance advisor counts and titles; database size, auth user count and storage size.
 
@@ -86,7 +86,7 @@ select coalesce(sum((metadata->>'size')::bigint),0)::bigint as bytes from storag
 
 The SQL endpoint is POST because the Management API has no GET for these numbers. The statements are constants in `supabase/functions/_shared/providers/supabase.ts`; nothing is interpolated into them.
 
-**Known gaps:** paused projects return null for size and user count (the SQL endpoint rejects them). HQ's own Supabase project appears in the list like any other.
+**Known gaps:** paused projects return null for size and user count (the SQL endpoint rejects them). Vibe Central's own Supabase project appears in the list like any other.
 
 ## Stripe
 
@@ -123,7 +123,7 @@ Google is different: there is no token to paste. You create your own OAuth clien
 1. console.cloud.google.com → create a project (any name).
 2. APIs & Services → Library → enable **Gmail API** and **Google Calendar API**.
 3. APIs & Services → OAuth consent screen (Google Auth Platform) → Audience: **External**. Fill in the app name and support email.
-4. Branding needs three URLs. HQ serves them: home `https://<your-origin>/`, privacy `https://<your-origin>/privacy`, terms `https://<your-origin>/terms`.
+4. Branding needs three URLs. Vibe Central serves them: home `https://<your-origin>/`, privacy `https://<your-origin>/privacy`, terms `https://<your-origin>/terms`.
 5. Add the scopes above under Data access.
 6. Credentials → Create credentials → OAuth client ID → Web application. Authorized redirect URIs:
    - `https://<your-origin>/api/auth/google/callback` (sign-in)
@@ -157,7 +157,7 @@ Google is different: there is no token to paste. You create your own OAuth clien
 
 **Create the key:** appstoreconnect.apple.com → Users and Access → Integrations → App Store Connect API → Team Keys → Generate API Key. Role **Developer** is enough. Download the `.p8` once (Apple only lets you download it once), note the Key ID and the Issuer ID at the top of the page.
 
-**Permissions:** App Store Connect keys are scoped by role, not by endpoint. Developer is the lowest role that can read apps, versions and builds. HQ signs the ES256 JWT locally with the `.p8`; the key never leaves the sync function.
+**Permissions:** App Store Connect keys are scoped by role, not by endpoint. Developer is the lowest role that can read apps, versions and builds. Vibe Central signs the ES256 JWT locally with the `.p8`; the key never leaves the sync function.
 
 **What is read:** apps (name, bundle id, SKU, platforms); the live version and state; the pending version and its review state; the latest build and its processing state; the TestFlight beta review state of that build.
 
@@ -179,13 +179,13 @@ Google is different: there is no token to paste. You create your own OAuth clien
 
 **Endpoints:** `POST https://oauth2.googleapis.com/token` (service-account JWT exchange), `GET storage/v1/b/{bucket}/o` (list), `GET storage/v1/b/{bucket}/o/{name}?alt=media` (download CSV), `GET androidpublisher/v3/applications/{package}/reviews`.
 
-**Known gaps:** the release status (in review, rolled out, halted) is not shown because reading it requires `edits.insert`, which is a write call; HQ does not make it. The app title is only available through the same `edits.*` API, so apps are listed by package name. The ratings overview CSV has no rating count. Report CSVs are produced by Google once a day.
+**Known gaps:** the release status (in review, rolled out, halted) is not shown because reading it requires `edits.insert`, which is a write call; Vibe Central does not make it. The app title is only available through the same `edits.*` API, so apps are listed by package name. The ratings overview CSV has no rating count. Report CSVs are produced by Google once a day.
 
 ## Anthropic (Claude API usage and cost)
 
 **Create the key:** console.anthropic.com → Settings → Organization → Admin keys → Create admin key.
 
-**Permissions:** none to choose. Admin keys are full organization admin by design: Anthropic exposes the usage and cost reports only through the Admin API, and admin keys cannot be scoped. This is the one connector whose credential is more powerful than what HQ does with it. HQ calls four read endpoints and nothing else; audit `supabase/functions/_shared/providers/anthropic.ts` if you want to check. If that trade-off is not acceptable, skip this connector. It is optional.
+**Permissions:** none to choose. Admin keys are full organization admin by design: Anthropic exposes the usage and cost reports only through the Admin API, and admin keys cannot be scoped. This is the one connector whose credential is more powerful than what Vibe Central does with it. Vibe Central calls four read endpoints and nothing else; audit `supabase/functions/_shared/providers/anthropic.ts` if you want to check. If that trade-off is not acceptable, skip this connector. It is optional.
 
 **What is read:** organization name; workspaces; 30 days of cost by day, workspace and model; 30 days of token usage (input, output, cache read, cache write) by model.
 
@@ -199,6 +199,6 @@ Google is different: there is no token to paste. You create your own OAuth clien
 
 Alerts are optional. Without a Resend key they are still recorded in the database and shown in project history, but no email goes out.
 
-**Create the key:** resend.com → API Keys → Create API Key, permission **Sending access** only, restricted to your sending domain. Verify a sending domain under Domains (DKIM, SPF, MX records). Then set `RESEND_API_KEY` and `ALERT_FROM` (for example `HQ <hq@yourdomain.com>`) in the wizard or under Settings → Setup keys.
+**Create the key:** resend.com → API Keys → Create API Key, permission **Sending access** only, restricted to your sending domain. Verify a sending domain under Domains (DKIM, SPF, MX records). Then set `RESEND_API_KEY` and `ALERT_FROM` (for example `Vibe Central <vibe@yourdomain.com>`) in the wizard or under Settings → Setup keys.
 
 **The only call:** `POST https://api.resend.com/emails`. Alert kinds, dedupe fingerprints and quiet hours are described in `supabase/functions/sync/README.md`.

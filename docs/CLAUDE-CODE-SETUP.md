@@ -10,7 +10,7 @@ Two small Node scripts run on each machine where you use Claude Code. They post 
 Both read `~/.hq/config.json`:
 
 ```json
-{ "url": "https://hq.yourdomain.com", "ingestKey": "hqi_...", "machine": "Laptop", "ignoreFolders": ["scratch"] }
+{ "url": "https://vibe.yourdomain.com", "ingestKey": "hqi_...", "machine": "Laptop", "ignoreFolders": ["scratch"] }
 ```
 
 `machine` defaults to the hostname. `ignoreFolders` (optional) lists folder names to skip entirely. The environment variables `HQ_URL`, `HQ_INGEST_KEY` and `HQ_MACHINE` override the file; `HQ_HOME` moves the `~/.hq` directory (useful for testing).
@@ -28,13 +28,13 @@ Open **Connections → Claude Code → Install** in the dashboard and copy the l
 macOS and Linux:
 
 ```bash
-curl -fsSL https://hq.yourdomain.com/agent/install.sh | bash -s -- --url https://hq.yourdomain.com --key hqi_... --global
+curl -fsSL https://vibe.yourdomain.com/agent/install.sh | bash -s -- --url https://vibe.yourdomain.com --key hqi_... --global
 ```
 
 Windows PowerShell (works with the default execution policy):
 
 ```powershell
-& ([scriptblock]::Create((irm https://hq.yourdomain.com/agent/install.ps1))) -Url https://hq.yourdomain.com -IngestKey hqi_... -Global
+& ([scriptblock]::Create((irm https://vibe.yourdomain.com/agent/install.ps1))) -Url https://vibe.yourdomain.com -IngestKey hqi_... -Global
 ```
 
 The machine shows up in the dashboard under its computer name. Pass `--machine "Name"` / `-Machine "Name"` to choose a different label, or rename it later from Connections → Claude Code. Drop `--global` / `-Global` if you do not want the `HQ:` block instruction added to your global `~/.claude/CLAUDE.md`.
@@ -45,8 +45,8 @@ What the installer does, on both platforms:
 
 1. Copies `hq-session-end.mjs`, `hq-usage-agent.mjs`, `hq-hook-settings.mjs` and `CLAUDE-HQ-snippet.md` to `~/.hq/`.
 2. Writes `~/.hq/config.json` (mode 600 on macOS).
-3. Installs the scheduler: `~/Library/LaunchAgents/com.hq.usage-agent.plist` (every 900 s, at login, with the absolute node path because launchd has a minimal `PATH`) on macOS; a Scheduled Task **"HQ usage agent"** on Windows (every 15 minutes, as you, while logged on, hidden, 10-minute limit, no admin rights).
-4. Merges the SessionEnd hook into `~/.claude/settings.json`, keeping your other hooks. An existing HQ entry is updated in place, never duplicated.
+3. Installs the scheduler: `~/Library/LaunchAgents/com.vibecentral.usage-agent.plist` (every 900 s, at login, with the absolute node path because launchd has a minimal `PATH`) on macOS; a Scheduled Task **"Vibe Central usage agent"** on Windows (every 15 minutes, as you, while logged on, hidden, 10-minute limit, no admin rights).
+4. Merges the SessionEnd hook into `~/.claude/settings.json`, keeping your other hooks. An existing Vibe Central entry is updated in place, never duplicated.
 5. With `--global` / `-Global`: appends the `HQ:` instructions to `~/.claude/CLAUDE.md` between `<!-- hq:start -->` and `<!-- hq:end -->` markers (idempotent).
 6. Ends with a ping and a dry run so you see it working.
 
@@ -101,7 +101,7 @@ node ~/.hq/hq-usage-agent.mjs --reset                # forget state and re-aggre
 `hook.json` for the dry run is what Claude Code pipes on stdin:
 `{"session_id":"...","transcript_path":"~/.claude/projects/<dir>/<id>.jsonl","cwd":"/path/to/project","hook_event_name":"SessionEnd","reason":"exit"}`.
 
-Logs: `~/.hq/hook.log` and `~/.hq/usage-agent.log` (both rotate at 1 MB), plus `~/.hq/launchd.log` on macOS. Check the scheduler on Windows with `Get-ScheduledTask -TaskName 'HQ usage agent' | Get-ScheduledTaskInfo`, on macOS with `launchctl list | grep com.hq`.
+Logs: `~/.hq/hook.log` and `~/.hq/usage-agent.log` (both rotate at 1 MB), plus `~/.hq/launchd.log` on macOS. Check the scheduler on Windows with `Get-ScheduledTask -TaskName 'Vibe Central usage agent' | Get-ScheduledTaskInfo`, on macOS with `launchctl list | grep com.hq`.
 
 ## What gets sent
 
@@ -143,10 +143,10 @@ Claude Code appends several JSONL lines per assistant message (one per content b
 macOS and Linux:
 
 ```bash
-curl -fsSL https://hq.yourdomain.com/agent/install.sh | bash -s -- --uninstall
+curl -fsSL https://vibe.yourdomain.com/agent/install.sh | bash -s -- --uninstall
 # or by hand:
-launchctl bootout gui/$(id -u) ~/Library/LaunchAgents/com.hq.usage-agent.plist
-rm ~/Library/LaunchAgents/com.hq.usage-agent.plist
+launchctl bootout gui/$(id -u) ~/Library/LaunchAgents/com.vibecentral.usage-agent.plist
+rm ~/Library/LaunchAgents/com.vibecentral.usage-agent.plist
 node ~/.hq/hq-hook-settings.mjs --settings ~/.claude/settings.json --remove
 node ~/.hq/hq-hook-settings.mjs --claude-md ~/.claude/CLAUDE.md --remove
 rm -rf ~/.hq
@@ -158,7 +158,7 @@ Windows:
 # from a clone of the repo:
 powershell -ExecutionPolicy Bypass -File scripts\install-hq-agent.ps1 -Uninstall
 # or by hand:
-Unregister-ScheduledTask -TaskName 'HQ usage agent' -Confirm:$false
+Unregister-ScheduledTask -TaskName 'Vibe Central usage agent' -Confirm:$false
 node "$env:USERPROFILE\.hq\hq-hook-settings.mjs" --settings "$env:USERPROFILE\.claude\settings.json" --remove
 node "$env:USERPROFILE\.hq\hq-hook-settings.mjs" --claude-md "$env:USERPROFILE\.claude\CLAUDE.md" --remove
 Remove-Item -Recurse -Force "$env:USERPROFILE\.hq"
