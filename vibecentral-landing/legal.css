@@ -8,7 +8,7 @@ a{color:var(--accent2);text-decoration:none}a:hover{text-decoration:underline}
 .wrap{max-width:760px;margin:0 auto;padding:40px 24px 48px}
 .brand{display:inline-flex;align-items:center;gap:10px;color:var(--text);margin-bottom:28px}
 .brand img{height:32px;width:auto;display:block}
-.logo-l{display:none}@media (prefers-color-scheme:light){.logo-d{display:none}.logo-l{display:block}}
+.brand .logo-l{display:none}@media (prefers-color-scheme:light){.brand .logo-d{display:none}.brand .logo-l{display:block}}
 h1{font-size:36px;line-height:1.1;font-weight:800;letter-spacing:-.035em;margin:0 0 6px}
 h2{font-size:21px;line-height:28px;font-weight:700;letter-spacing:-.015em;margin:30px 0 8px}
 p,li{font-size:15.5px;line-height:24px}
