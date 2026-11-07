@@ -5,6 +5,8 @@
   </picture>
 </p>
 
+<p align="center"><a href="https://buymeacoffee.com/romanvaxman"><img alt="Buy me a coffee" src="https://img.shields.io/badge/Buy%20me%20a%20coffee-%E2%98%95-B9A5FF?style=flat-square"></a> <a href="https://vibecentral.app">vibecentral.app</a> · <a href="https://github.com/vaxman14/vibecentral/discussions">Discussions</a></p>
+
 # Vibe Central
 
 One read-only dashboard for everything you run: domains, sites, databases, revenue, app stores, mail, calendar, GitHub, Claude API spend, and what Claude Code did today. Self-hosted on your own free tiers. One user, by design.
@@ -153,3 +155,7 @@ In your Supabase project. Export it as JSON from Settings → Data at any time.
 MIT, copyright 2026 Roman Vaxman. See [LICENSE](LICENSE).
 
 Design: the bananana V18 tokens by the author. Built with Hono, Vite, Supabase and Cloudflare Workers.
+
+## Support the project
+
+vibecentral is free and will stay free. If it saves you time, you can [buy me a coffee](https://buymeacoffee.com/romanvaxman). Feature and connection requests go through the form on [vibecentral.app](https://vibecentral.app) or [GitHub Discussions](https://github.com/vaxman14/vibecentral/discussions).

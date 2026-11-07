@@ -58,5 +58,5 @@ export const stores: ViewFn = async (ctx) => {
 };
 
 export const help: ViewFn = async (ctx) => {
-  ctx.root.innerHTML = `<div class="card"><h2>Help</h2><p class="muted" style="margin:0">This dashboard only reads. To add a provider, open Connections and paste a read-only token, or sign in with that provider. Each account syncs every 5 minutes.</p></div>`;
+  ctx.root.innerHTML = `<div class="card"><h2>Help</h2><p class="muted" style="margin:0 0 12px">This dashboard only reads. To add a provider, open Connections and paste a read-only token, or sign in with that provider. Each account syncs every 5 minutes.</p><p class="muted" style="margin:0 0 12px">Docs, setup and source: <a href="https://github.com/vaxman14/vibecentral" target="_blank" rel="noopener">github.com/vaxman14/vibecentral</a>. Want a feature or a new connection? Ask at <a href="https://vibecentral.app" target="_blank" rel="noopener">vibecentral.app</a>.</p><p class="muted" style="margin:0">vibecentral is free and open source. If it saves you time: <a href="https://buymeacoffee.com/romanvaxman" target="_blank" rel="noopener">buy me a coffee</a> ☕</p></div>`;
 };

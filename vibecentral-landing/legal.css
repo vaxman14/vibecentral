@@ -1,0 +1,20 @@
+/* vibecentral legal pages: same tokens as the landing page, light/dark by system preference. */
+:root{color-scheme:dark;--canvas:#0E0C14;--surface:#191622;--border:#2B2738;--text:#F3F0FA;--muted:#ABA6BE;--faint:#7E7994;--accent2:#B9A5FF;--glow:#2A2050;
+  --font:Inter,system-ui,'Segoe UI',Arial,sans-serif;--mono:ui-monospace,SFMono-Regular,Consolas,monospace}
+@media (prefers-color-scheme:light){:root{color-scheme:light;--canvas:#EFEEF6;--surface:#FFFFFF;--border:#E7E4F0;--text:#17151F;--muted:#5F5A70;--faint:#8F8AA3;--accent2:#6D3FE0;--glow:#E3DCFB}}
+*{box-sizing:border-box}
+body{margin:0;font:16px/26px var(--font);color:var(--text);background:radial-gradient(1200px 700px at 100% -10%,var(--glow) 0,transparent 60%),var(--canvas)}
+a{color:var(--accent2);text-decoration:none}a:hover{text-decoration:underline}
+.wrap{max-width:760px;margin:0 auto;padding:40px 24px 48px}
+.brand{display:inline-flex;align-items:center;gap:10px;color:var(--text);margin-bottom:28px}
+.brand img{height:32px;width:auto;display:block}
+.logo-l{display:none}@media (prefers-color-scheme:light){.logo-d{display:none}.logo-l{display:block}}
+h1{font-size:36px;line-height:1.1;font-weight:800;letter-spacing:-.035em;margin:0 0 6px}
+h2{font-size:21px;line-height:28px;font-weight:700;letter-spacing:-.015em;margin:30px 0 8px}
+p,li{font-size:15.5px;line-height:24px}
+p{margin:0 0 12px}ul{margin:0 0 12px;padding-left:22px}li{margin:4px 0}
+.meta{font-size:13px;color:var(--faint);margin-bottom:10px}
+code{font-family:var(--mono);font-size:13px;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:1px 6px}
+pre{font-family:var(--mono);font-size:13px;line-height:20px;white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px}
+footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--border);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--faint)}
+footer a{color:var(--muted)}
