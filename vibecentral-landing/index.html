@@ -461,11 +461,11 @@ footer a:hover{color:var(--text)}
   // feature / connection request modal
   var mbg=document.getElementById('reqModal'),modal=mbg.querySelector('.modal'),form=document.getElementById('reqForm'),err=document.getElementById('reqErr'),send=document.getElementById('reqSend'),last=null;
   function openReq(){last=document.activeElement;mbg.hidden=false;mbg.classList.add('open');document.body.style.overflow='hidden';setTimeout(function(){(form.querySelector('[name=email]')||modal).focus()},30)}
-  function closeReq(){mbg.classList.remove('open');mbg.hidden=true;document.body.style.overflow='';if(last&&last.focus)last.focus()}
+  function closeReq(){mbg.classList.remove('open');mbg.hidden=true;document.body.style.overflow='';if(last&&last.focus)last.focus();if(modal.classList.contains('done'))setTimeout(function(){modal.classList.remove('done');form.reset();err.style.display='none'},200)}
   document.getElementById('reqBtn').addEventListener('click',openReq);
   document.getElementById('reqClose').addEventListener('click',closeReq);
   document.getElementById('reqCancel').addEventListener('click',closeReq);
-  document.getElementById('reqDone').addEventListener('click',function(){closeReq();setTimeout(function(){modal.classList.remove('done');form.reset();err.style.display='none'},200)});
+  document.getElementById('reqDone').addEventListener('click',closeReq);
   mbg.addEventListener('click',function(e){if(e.target===mbg)closeReq()});
   document.addEventListener('keydown',function(e){if(e.key==='Escape'&&mbg.classList.contains('open'))closeReq()});
   form.addEventListener('submit',function(e){
